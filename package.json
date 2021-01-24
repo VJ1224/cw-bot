@@ -1,0 +1,25 @@
+{
+  "name": "cw-bot",
+  "version": "1.0.0",
+  "description": "A Discord bot that gives content warnings for different media. Uses the [DoesTheDogDie](https://www.doesthedogdie.com/api) API.",
+  "main": "app.js",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "discord.js": "^12.5.1",
+    "dotenv": "^8.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VJ1224/cw-bot.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/VJ1224/cw-bot/issues"
+  },
+  "homepage": "https://github.com/VJ1224/cw-bot#readme"
+}

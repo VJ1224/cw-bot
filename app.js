@@ -52,8 +52,7 @@ client.on('message', async message => {
 		return message.channel.send(reply);
 	}
 
-	let data, warnings = [];
-	let desc = '';
+	let data, id, warnings = [];
 
 	try {
 		let response = await dtdd.get('/search', {
@@ -68,7 +67,7 @@ client.on('message', async message => {
 			return;
 		}
 
-		let id = response.data.items[0].id;
+		id = response.data.items[0].id;
 		response = await dtdd.get(`/media/${id}`);
 		data = response.data;
 	} catch (e) {
@@ -79,13 +78,21 @@ client.on('message', async message => {
 	data.topicItemStats.sort((a,b) => b.yesSum - a.yesSum);
 
 	for (const topic of data.topicItemStats) {
-		if (topic.yesSum > 0) {
+		if (topic.isYes === 1 && topic.topic.isSensitive) {
 			if (!warnings.includes(topic.topic.TopicCategory.name))
 				warnings.push(topic.topic.TopicCategory.name);
 		}
 	}
 
-	message.channel.send(warnings.join('\n'));
+	if (warnings.length === 0) {
+		warnings.push('Seems safe!')
+	}
+
+	const embed = new MessageEmbed()
+		.setTitle(`CW: ${args}`)
+		.setDescription(warnings.join('\n') + `\n\n[See more](https://www.doesthedogdie.com/media/${id})`);
+		
+	message.channel.send(embed);
 });
 
 client.login(process.env.TOKEN);
