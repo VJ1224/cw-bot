@@ -16,12 +16,6 @@ To add the bot to your server, [click here](https://discord.com/oauth2/authorize
 
 * Dotenv: npm install dotenv
 
-## Files
-
-* app.js: Stores the main bot logic to read messages and execute commands.
-
-* commands: Folder that stores each command in a separate .js file. Each .js file exports the execute function as well as relevant information about the command.
-
 ## Run
 
 Run the bot using Node.js
