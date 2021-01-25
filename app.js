@@ -52,7 +52,7 @@ client.on('message', async message => {
 		return message.channel.send(reply);
 	}
 
-	let data, id, warnings = [];
+	let data, id, year, media_type, warnings = [];
 
 	try {
 		let response = await dtdd.get('/search', {
@@ -68,6 +68,9 @@ client.on('message', async message => {
 		}
 
 		id = response.data.items[0].id;
+		year = response.data.items[0].releaseYear;
+		media_type = response.data.items[0].itemType.name;
+
 		response = await dtdd.get(`/media/${id}`);
 		data = response.data;
 	} catch (e) {
@@ -89,7 +92,7 @@ client.on('message', async message => {
 	}
 
 	const embed = new MessageEmbed()
-		.setTitle(`CW: ${args}`)
+		.setTitle(`CW: ${args} | ${media_type} | ${year}`)
 		.setDescription(warnings.join('\n') + `\n\n[See more](https://www.doesthedogdie.com/media/${id})`);
 		
 	message.channel.send(embed);
