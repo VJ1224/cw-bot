@@ -43,7 +43,7 @@ client.on('message', async message => {
 	if (!message.content.startsWith(process.env.PREFIX)) return;
 
 	// Get the command as well as the command arguments
-	const args = message.content.slice(process.env.PREFIX.length);
+	const args = message.content.slice(process.env.PREFIX.length).trim();
 
 	// If no arguments are provided, leave
 	if (args === "") {
@@ -52,7 +52,7 @@ client.on('message', async message => {
 		return message.channel.send(reply);
 	}
 
-	let data, id, year, media_type, warnings = [];
+	let data, name, id, year, media_type, warnings = [];
 
 	try {
 		let response = await dtdd.get('/search', {
@@ -67,6 +67,7 @@ client.on('message', async message => {
 			return;
 		}
 
+		name = response.data.items[0].name;
 		id = response.data.items[0].id;
 		year = response.data.items[0].releaseYear;
 		media_type = response.data.items[0].itemType.name;
@@ -92,7 +93,7 @@ client.on('message', async message => {
 	}
 
 	const embed = new MessageEmbed()
-		.setTitle(`CW: ${args} | ${media_type} | ${year}`)
+		.setTitle(`CW: ${name} | ${media_type} | ${year}`)
 		.setDescription(warnings.join('\n') + `\n\n[See more](https://www.doesthedogdie.com/media/${id})`);
 		
 	message.channel.send(embed);
