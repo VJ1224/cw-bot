@@ -12,9 +12,7 @@ const dtdd = axios.create({
 	}
 });
 
-// When the client is ready
 client.on('ready', async () => {
-	// Logs a list of servers the bot is on
 	console.log('Connected');
 	const total = client.guilds.cache.size;
 	console.log(`Total Servers: ${total}`);
@@ -32,20 +30,15 @@ client.on('guildDelete', async guild => {
 });
 
 client.on('message', async message => {
-	// Ignore messages by a bot
 	if (message.author.bot) return;
 
-	// Removes all @ mentions
 	message.content = message.content.replace(/<@!?(\d+)>/g, '');
 	message.content = message.content.trim();
 
-	// If the message does not start with the prefix, ignore
 	if (!message.content.startsWith(process.env.PREFIX)) return;
 
-	// Get the command as well as the command arguments
 	const args = message.content.slice(process.env.PREFIX.length).trim();
 
-	// If no arguments are provided, leave
 	if (args === "") {
 		let reply = 'No arguments provided.\n';
 		reply += `Usage: ${process.env.PREFIX}[media-title]`;
@@ -93,7 +86,7 @@ client.on('message', async message => {
 	}
 
 	const embed = new MessageEmbed()
-		.setTitle(`CW: ${name} | ${media_type} | ${year}`)
+		.setTitle(`CW: ${name} (${year}) | ${media_type}`)
 		.setDescription(warnings.join('\n') + `\n\n[See more](https://www.doesthedogdie.com/media/${id})`);
 		
 	message.channel.send(embed);
